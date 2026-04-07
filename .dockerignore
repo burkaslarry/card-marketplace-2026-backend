@@ -1,0 +1,25 @@
+# Git / IDE
+.git
+.gitignore
+**/.DS_Store
+.idea
+.vscode
+*.iml
+
+# Gradle — image builds fresh inside Docker
+.gradle
+build
+
+# Local env (never bake secrets into image)
+.env
+.env.*
+
+# Logs & temp
+*.log
+tmp
+
+# Docs / CI noise (optional)
+README.md
+Dockerfile*
+docker-compose*.yml
+.github

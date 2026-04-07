@@ -1,0 +1,17 @@
+# Local smoke test: docker compose up --build
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: elite-trader-backend:latest
+    ports:
+      - "8080:8080"
+    environment:
+      ELITE_TRADER_CORS_ALLOWED_ORIGINS: "http://localhost:3000,http://localhost:3001"
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:8080/api/verify/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s

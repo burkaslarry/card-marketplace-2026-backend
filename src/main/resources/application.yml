@@ -20,5 +20,6 @@ logging:
 
 elite-trader:
   cors:
-    allowed-origins: "http://localhost:3000,http://localhost:3001,https://elite-trader.vercel.app"
+    # Comma-separated; override in Docker: -e ELITE_TRADER_CORS_ALLOWED_ORIGINS="https://app.example.com"
+    allowed-origins: ${ELITE_TRADER_CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:3001,https://elite-trader.vercel.app}
   demo-mode: true
