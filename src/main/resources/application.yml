@@ -1,0 +1,24 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: elite-trader-backend
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+
+logging:
+  level:
+    root: INFO
+    com.elitetrader: DEBUG
+
+elite-trader:
+  cors:
+    allowed-origins: "http://localhost:3000,http://localhost:3001,https://elite-trader.vercel.app"
+  demo-mode: true
