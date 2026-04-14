@@ -12,8 +12,8 @@ RUN chmod +x gradlew
 COPY src src
 
 RUN ./gradlew bootJar --no-daemon -x test \
- && JAR="$(ls build/libs/*.jar | grep -v '\-plain\.jar$' | head -n1)" \
- && test -f "$JAR" \
+ && JAR="$(find build/libs -maxdepth 1 -type f -name '*.jar' ! -name '*-plain.jar' | head -n1)" \
+ && test -n "$JAR" && test -f "$JAR" \
  && cp "$JAR" /app/application.jar
 
 FROM eclipse-temurin:17-jre-jammy
@@ -35,6 +35,6 @@ EXPOSE 8080
 ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75"
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=50s --retries=3 \
-  CMD curl -sf http://127.0.0.1:8080/api/verify/health | grep -q '"status"' || exit 1
+  CMD sh -c 'curl -sf "http://127.0.0.1:${PORT:-8080}/api/verify/health" | grep -q "status" || exit 1'
 
 ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar /app/app.jar"]
